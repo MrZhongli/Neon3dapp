@@ -29,6 +29,10 @@ class _MainNavbarState extends State<MainNavbar> {
         currentIndex: _currentIndex,
         onTap: (index) => setState(() => _currentIndex = index),
         type: BottomNavigationBarType.fixed,
+        backgroundColor: const Color(0xFF1E1E1E),
+        selectedItemColor: const Color(0xFFCCFF00),
+        unselectedItemColor: const Color(0xFFAAAAAA),
+        selectedLabelStyle: const TextStyle(fontWeight: FontWeight.bold),
         items: const [
           BottomNavigationBarItem(
             icon: Icon(Icons.calculate),

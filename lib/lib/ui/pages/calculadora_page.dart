@@ -116,6 +116,25 @@ class CalculatorPageState extends State<CalculatorPage> {
     );
   }
 
+  void _goToAssignClient() {
+    Navigator.push(
+      context,
+      MaterialPageRoute(
+        builder: (_) => AssignQuotePage(
+          resumen: {
+            'cGramo': _cGramo,
+            'cMat': _cMat,
+            'cTiempo': _cTiempo,
+            'cBase': _cBase,
+            'ganancia': _gan,
+            'total': _cTotal,
+            'incluyeTiempo': _incluirTiempo,
+          },
+        ),
+      ),
+    );
+  }
+
   @override
   void initState() {
     super.initState();
@@ -162,8 +181,71 @@ class CalculatorPageState extends State<CalculatorPage> {
                 ),
                 child: const Text('Calcular', style: TextStyle(color:Colors.black,fontWeight:FontWeight.bold)),
               ),
+              const SizedBox(height:12),
+              ElevatedButton(
+                onPressed: _goToAssignClient,
+                style: ElevatedButton.styleFrom(
+                  backgroundColor: Colors.white,
+                  foregroundColor: Colors.black,
+                  shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(12)),
+                  padding: const EdgeInsets.symmetric(vertical:16),
+                ),
+                child: const Text('Siguiente', style: TextStyle(fontWeight: FontWeight.bold)),
+              ),
             ],
           ),
+        ),
+      ),
+    );
+  }
+}
+
+/// Página siguiente donde se asigna el presupuesto a un cliente
+class AssignQuotePage extends StatelessWidget {
+  final Map<String, dynamic> resumen;
+
+  const AssignQuotePage({super.key, required this.resumen});
+
+  @override
+  Widget build(BuildContext context) {
+    return Scaffold(
+      backgroundColor: const Color(0xFF121212),
+      appBar: AppBar(
+        title: const Text('Asignar a Cliente'),
+        backgroundColor: const Color(0xFF121212),
+        foregroundColor: Colors.white,
+      ),
+      body: Padding(
+        padding: const EdgeInsets.all(16),
+        child: Column(
+          crossAxisAlignment: CrossAxisAlignment.start,
+          children: [
+            const Text('Resumen del presupuesto:', style: TextStyle(color: Colors.white, fontSize: 18, fontWeight: FontWeight.bold)),
+            const SizedBox(height: 12),
+            ...resumen.entries.map((e) => Padding(
+              padding: const EdgeInsets.symmetric(vertical: 4),
+              child: Row(
+                mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                children: [
+                  Text(e.key, style: const TextStyle(color: Color(0xFFAAAAAA))),
+                  Text(e.value.toString(), style: const TextStyle(color: Colors.white)),
+                ],
+              ),
+            )),
+            const Spacer(),
+            ElevatedButton(
+              onPressed: () {
+                // Lógica para asignar el presupuesto al cliente aquí
+              },
+              style: ElevatedButton.styleFrom(
+                backgroundColor: const Color(0xFFCCFF00),
+                foregroundColor: Colors.black,
+                padding: const EdgeInsets.symmetric(vertical: 16),
+                shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(12)),
+              ),
+              child: const Center(child: Text('Confirmar presupuesto')),
+            )
+          ],
         ),
       ),
     );
